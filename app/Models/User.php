@@ -47,4 +47,14 @@ class User extends Authenticatable
     {
         return 'https://gravatar.com/avatar/' . md5($this->email) . '?s=50';
     }
+
+    /**
+     * Get all of the replies for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replies()
+    {
+        return $this->hasMany(Reply::class, 'user_id', 'id');
+    }
 }
