@@ -35,7 +35,9 @@
         </div>
         <div class="w-full">
 
-            {{-- Search form here --}}
+            <form class="mb-4" action="">
+                <input class="bg-slate-800 border-0 rounded-md w-1/3 p-3 text-white/60 text-xs" wire:model="search" type="text" name="" id="" placeholder="// ...">
+            </form>
 
             @if (isset($threads) and count($threads))
                 @foreach ($threads as $threadItem)
