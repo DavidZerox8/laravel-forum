@@ -4,10 +4,75 @@ namespace App\Http\Livewire;
 
 use App\Models\Reply;
 use Livewire\Component;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ShowReply extends Component
 {
+    use AuthorizesRequests;
+
     public Reply $reply;
+    public $body;
+    public $is_creating = false;
+    public $is_editing = false;
+
+    protected $listeners = [
+        'refresh' => '$refresh'
+    ];
+
+    public function updatedIsEditing()
+    {
+        $this->authorize('update', $this->reply);
+        $this->is_creating = false;
+        $this->body = $this->reply->body;
+    }
+
+    public function updatedIsCreating()
+    {
+        $this->is_editing = false;
+        $this->body = '';
+    }
+
+    public function updateReply()
+    {
+        $this->authorize('update', $this->reply);
+
+        //Validar
+        $this->validate([
+            'body' => 'required'
+        ]);
+
+        //Actualizar
+        $this->reply->update([
+            'body' => $this->body
+        ]);
+
+        //Actualizar
+        $this->body = '';
+        $this->is_editing = false;
+        $this->emitSelf('refresh');
+    }
+
+    public function postChild()
+    {
+        if(! is_null($this->reply->reply_id)) return;
+
+        //Validar
+        $this->validate([
+            'body' => 'required'
+        ]);
+
+        //Crear
+        auth()->user()->replies()->create([
+            'thread_id' => $this->reply->thread->id,
+            'reply_id'  => $this->reply->id,
+            'body'      => $this->body
+        ]);
+
+        //Actualizar
+        $this->body = '';
+        $this->is_creating = false;
+        $this->emitSelf('refresh');
+    }
 
     public function render()
     {
