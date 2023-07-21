@@ -9,14 +9,14 @@
             <ul>
                 @if (isset($categories) and count($categories))
                     <li class="mb-2">
-                        <a href="" class="p-2 rounded-md flex bg-slate-800 items-center gap-2 text-white/60 hover:text-white font-semibold text-xs capitalize">
+                        <a href="#" wire:click.prevent="filterByCategory('')" class="p-2 rounded-md flex bg-slate-800 items-center gap-2 text-white/60 hover:text-white font-semibold text-xs capitalize">
                             <span class="w-2 h-2 rounded-full" style="background-color: lightgreen;"></span>
                             Todos los resultados
                         </a>
                     </li>
                     @foreach ($categories as $categoryItem)
                         <li class="mb-2">
-                            <a href="" class="p-2 rounded-md flex bg-slate-800 items-center gap-2 text-white/60 hover:text-white font-semibold text-xs capitalize">
+                            <a href="#" wire:click.prevent="filterByCategory('{{ $categoryItem->id }}')" class="p-2 rounded-md flex bg-slate-800 items-center gap-2 text-white/60 hover:text-white font-semibold text-xs capitalize">
                                 <span class="w-2 h-2 rounded-full" style="background-color: {{ $categoryItem->color }};"></span>
                                 {{ $categoryItem->name }}
                             </a>
@@ -24,7 +24,7 @@
                     @endforeach
                 @else
                     <li class="mb-2">
-                        <a href="" class="p-2 rounded-md flex bg-slate-800 items-center gap-2 text-white/60 hover:text-white font-semibold text-xs capitalize">
+                        <a href="#"  class="p-2 rounded-md flex bg-slate-800 items-center gap-2 text-white/60 hover:text-white font-semibold text-xs capitalize">
                             <span class="w-2 h-2 rounded-full" style="background-color: black;"></span>
                             Aún no hay categorias
                         </a>
@@ -48,7 +48,7 @@
                             </div>
                             <div class="w-full">
                                 <h2 class="mb-4 flex items-start justify-between">
-                                    <a href="" class="text-xl font-semibold text-white/90">
+                                    <a href="{{ route('thread.show', ['thread' => $threadItem]) }}" class="text-xl font-semibold text-white/90">
                                         {{ $threadItem->title }}
                                     </a>
                                     <span class="rounded-full text-xs py-2 px-4 capitalize" style="color: {{ $threadItem->category->color }}; border: 1px solid {{ $threadItem->category->color }};">
