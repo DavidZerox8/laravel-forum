@@ -3,6 +3,7 @@
 use App\Http\Livewire\ShowThread;
 use App\Http\Livewire\ShowThreads;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
@@ -19,9 +20,16 @@ Route::middleware('auth')->group(function ()
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
     Route::get('/dashboard/threads', ShowThreads::class)->name('threads.index');
     Route::get('/dashboard/threads/{thread}', ShowThread::class)->name('thread.show');
+
+    Route::resource('threads', ThreadController::class)->except([
+        'show',
+        'index',
+        'delete'
+    ]);
+
+
 });
 
 require __DIR__.'/auth.php';

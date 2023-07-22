@@ -12,6 +12,13 @@ class Thread extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'body',
+        'user_id',
+        'category_id'
+    ];
+
     /**
      * Get the user that owns the Thread
      *

@@ -15,7 +15,7 @@
                         </span>
                     </h2>
                     <p class="mb-4 flex text-blue-600 font-semibold text-xs">
-                        {{ $thread->user->name }}
+                        {{ $thread->user->name }}&nbsp;
 
                         <span class="text-white/90">
                             {{ $thread->created_at->diffForHumans() }}
